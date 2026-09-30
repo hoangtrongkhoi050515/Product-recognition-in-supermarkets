@@ -1,0 +1,25 @@
+# Python 3.10 – 3.12
+# Cài: pip install -r requirements.txt
+# Nếu máy có GPU NVIDIA: cài PyTorch bản CUDA TRƯỚC theo hướng dẫn tại https://pytorch.org/get-started/locally/
+
+# --- Nền tảng + xử lý dữ liệu (GĐ 0–2) ---
+pyyaml>=6.0
+numpy>=1.24
+pandas>=2.0
+pillow>=10.0
+matplotlib>=3.7
+seaborn>=0.13
+
+# --- Học máy cổ điển + trích xuất đặc trưng (GĐ 3) ---
+scikit-learn>=1.3
+scikit-image>=0.22
+opencv-python>=4.8
+
+# --- Học sâu + YOLO (GĐ 3–4) – ultralytics tự cài torch nếu chưa có ---
+ultralytics>=8.3
+
+# --- Giao diện (GĐ 5) ---
+streamlit>=1.35
+
+# --- Kiểm thử ---
+pytest>=7.4

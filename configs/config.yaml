@@ -1,0 +1,31 @@
+# =============================================================
+# CẤU HÌNH CHUNG CỦA DỰ ÁN – mọi tham số đặt tại đây, không ghi cứng trong code
+# Đường dẫn tương đối tính từ thư mục gốc dự án (NHOM_14_DU_AN_HOC_MAY)
+# Các giá trị có ghi chú "ĐỀ XUẤT" đang chờ nhóm xác nhận
+# =============================================================
+
+project:
+  name: "Nhận diện sản phẩm siêu thị - Nhóm 14"
+  seed: 42                       # hạt giống ngẫu nhiên để kết quả tái lập được
+
+paths:
+  products: configs/products.csv # danh mục lớp + bảng giá (nguồn dữ liệu duy nhất)
+  raw_images: data/raw/images    # ảnh gốc sau khi chụp
+  raw_labels: data/raw/labels    # nhãn YOLO (.txt) xuất từ công cụ gán nhãn
+  yolo_dir: data/yolo            # bộ dữ liệu YOLO đã chia tập (sinh tự động)
+  crops_dir: data/crops          # ảnh cắt cho nhánh phân loại (sinh tự động)
+  models_dir: models             # trọng số mô hình đã huấn luyện
+  logs_dir: Logs                 # thống kê, nhật ký huấn luyện, biểu đồ
+
+split:                           # ĐỀ XUẤT – tỉ lệ chia theo ảnh gốc (tổng = 1.0)
+  train: 0.70
+  val: 0.15
+  test: 0.15
+
+crops:                           # tạo dữ liệu phân loại từ khung bao
+  padding: 0.05                  # nới khung thêm 5% mỗi phía để không mất mép sản phẩm
+  min_size: 32                   # ĐỀ XUẤT – bỏ khung có cạnh ngắn < 32 px
+
+data_check:
+  image_exts: [".jpg", ".jpeg", ".png", ".bmp", ".webp"]
+  min_box_size: 0.01             # cảnh báo khung có cạnh < 1% kích thước ảnh (nghi nhãn lỗi)

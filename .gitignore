@@ -1,0 +1,26 @@
+# Dữ liệu và kết quả nặng – không đưa lên Git (chia sẻ qua Drive)
+data/raw/images/
+data/raw/labels/
+data/yolo/
+data/crops/
+models/*.pt
+models/*.pkl
+models/*.onnx
+Logs/*
+!Logs/.gitkeep
+runs/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Hệ điều hành / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+~$*.docx
