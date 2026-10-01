@@ -12,19 +12,19 @@
 |---|---|
 | Bài toán chính | Phát hiện đối tượng (Object Detection) – YOLO, PyTorch + Ultralytics |
 | Bài toán so sánh (yêu cầu học phần) | Phân loại ảnh cắt từ khung bao: KNN, SVM, Random Forest, CNN, Transfer Learning |
-| Danh mục | 19 sản phẩm theo hóa đơn GO! Thái Nguyên 24/09/2026 (`configs/products.csv`) |
+| Danh mục | **12 sản phẩm** (rút gọn từ 19 sản phẩm trên hóa đơn GO! Thái Nguyên 24/09/2026; thay Red Bull bằng Pepsi lon 320 ml) – xem `configs/products.csv` (chốt 01/10/2026) |
+| Đơn vị tính (Q5) | Sữa TH true MILK tính theo **hộp lẻ** (36.400 đ/lốc 4 hộp = 9.100 đ/hộp; mỗi hộp một khung nhãn); sữa Vinamilk là **bịch** giấy; Pepsi lon 320 ml giá 10.300 đ |
 | Đầu ra | Nhận diện + đếm + tính tiền + xuất hóa đơn + giao diện |
 | Giao diện | Streamlit |
+| Công cụ gán nhãn (Q4) | **Roboflow** – làm việc nhóm online, xuất định dạng YOLO (chốt 01/10/2026). Xuất bản sao về máy sau mỗi đợt gán nhãn |
+| Nơi huấn luyện (Q1) | Máy MSI **không có GPU NVIDIA** → huấn luyện YOLO và CNN trên **Google Colab (GPU T4)**; máy cá nhân dùng để viết code, chạy thử dữ liệu nhỏ, chạy Streamlit (chốt 01/10/2026) |
 
 ## 2. Các quyết định còn chờ (❓)
 
 | # | Hạng mục | Đề xuất của Claude | Cần chốt trước |
 |---|---|---|---|
-| Q1 | Nơi huấn luyện | Viết/chạy thử code trên máy cá nhân, huấn luyện YOLO và CNN trên **Google Colab (GPU T4)**. Nếu máy MSI có GPU NVIDIA ≥ 4 GB VRAM thì có thể huấn luyện tại máy | Tuần 4 |
 | Q2 | Dạng đầu vào | **Bắt buộc:** ảnh tải lên + chụp 1 khung hình từ webcam. **Mở rộng (tuần 9, nếu kịp):** camera liên tục | Tuần 7 |
 | Q3 | Phiên bản YOLO | So sánh **YOLO11n** (ổn định, nhiều tài liệu) với **YOLO26n** (mới nhất, 01/2026, không cần NMS) | Tuần 5 |
-| Q4 | Công cụ gán nhãn | **Roboflow** (làm việc nhóm online, xuất sẵn định dạng YOLO) hoặc LabelImg (offline) | Tuần 2 |
-| Q5 | Tên sản phẩm & đơn vị | Đối chiếu bao bì thật; sữa TH: nhận diện theo **lốc** hay **hộp** | Tuần 2 |
 | Q6 | Tỉ lệ chia tập | 70 / 15 / 15 (đang để mặc định trong `configs/config.yaml`) | Tuần 4 |
 
 ## 3. Tiến độ theo giai đoạn
@@ -40,7 +40,7 @@
 | 6 | T9–T10 (26/11–09/12) | Thử nghiệm thực tế, viết Chương 3, Mở đầu, Kết luận, slide, tổng duyệt | Cả nhóm | Báo cáo hoàn chỉnh + demo |
 
 ### Mốc kiểm tra (milestone)
-- **M1 – 07/10:** môi trường chạy được `python -m src.data.dataset_stats` trên máy cả 3 thành viên.
+- 🟩 **M1 – 07/10:** môi trường chạy được `python -m src.data.dataset_stats` trên máy cả 3 thành viên *(đạt 01/10/2026)*.
 - **M2 – 21/10:** ≥ 200 đối tượng/lớp đã gán nhãn *(đề xuất, xem mục 4)*.
 - **M3 – 28/10:** dữ liệu đã chia tập, không còn lỗi nhãn.
 - **M4 – 18/11:** YOLO đạt mAP@0.5 trên tập Validation ≥ *(nhóm đặt mục tiêu sau lần huấn luyện đầu)*.
@@ -49,7 +49,7 @@
 
 ## 4. Chỉ tiêu dữ liệu (đề xuất)
 - Tổng khoảng **600–800 ảnh**, trong đó ≥ 60% là ảnh có **nhiều sản phẩm** (2–6 sản phẩm/ảnh) để giống khay thanh toán thật.
-- Mỗi lớp **≥ 200 đối tượng** (khung bao); các cặp dễ nhầm (Hảo Hảo/Tomyum, Vinamilk ít đường/có đường, các loại Omachi, 2 loại KitKat) chụp nhiều hơn.
+- Mỗi lớp **≥ 200 đối tượng** (khung bao); các cặp dễ nhầm (Handy Hảo Hảo/Tomyum, Omachi bắp bò/mì tô, Vinamilk/TH) chụp nhiều hơn.
 - Khoảng 5% ảnh nền không có sản phẩm (giảm phát hiện nhầm).
 - Chi tiết: `docs/HUONG_DAN_CHUP_ANH.md`, `docs/HUONG_DAN_GAN_NHAN.md`.
 

@@ -3,7 +3,7 @@
 Mục tiêu: bộ ảnh giống điều kiện **quầy thanh toán thật** – nhìn từ trên xuống khay, nhiều sản phẩm cùng lúc.
 
 ## 1. Chuẩn bị
-- Mua/mượn đủ 19 sản phẩm trong `configs/products.csv` (nên có 2–3 đơn vị mỗi loại để chụp nhiều món cùng lúc).
+- Mua/mượn đủ 12 sản phẩm trong `configs/products.csv` (nên có 2–3 đơn vị mỗi loại để chụp nhiều món cùng lúc).
 - **Cố định một "khay thanh toán"**: mặt bàn/tấm nền, điện thoại hoặc webcam đặt ở độ cao ~40–60 cm, nhìn từ trên xuống hoặc chéo nhẹ.
 - Thiết bị: *(nhóm ghi lại: tên điện thoại/webcam, độ phân giải)* – ghi vào báo cáo mục 2.2.1.
 - Tắt chế độ làm đẹp, HDR quá mức; ảnh JPG, độ phân giải ≥ 1280 px cạnh dài là đủ.
@@ -27,9 +27,9 @@ Mỗi ảnh là một file riêng; **không** chỉnh sửa, cắt ảnh sau khi
 3. **Nền**: ít nhất 2–3 loại nền (khay thực tế, bàn gỗ, nền sáng).
 4. **Cặp dễ nhầm** – chụp **nhiều hơn** và đặt chung trong cùng ảnh:
    - Mì ly Handy Hảo Hảo ↔ Handy Tomyum
-   - Sữa Vinamilk ít đường ↔ có đường
-   - Mì Omachi hải sản ↔ bắp bò ↔ mì tô Omachi tôm
-   - KitKat 17 g ↔ KitKat Chunky
+   - Mì Omachi bắp bò ↔ mì tô Omachi tôm
+   - Sữa bịch Vinamilk ↔ sữa hộp TH true MILK (cùng là sữa, cùng dạng hộp/bịch giấy)
+   - **Sữa TH:** chụp cả khi còn nguyên lốc 4 hộp và khi tách hộp lẻ; mỗi hộp sẽ được gán một khung.
 5. **Cân bằng**: mỗi lớp ≥ 200 lần xuất hiện. Sau mỗi buổi chụp + gán nhãn, chạy
    `python -m src.data.dataset_stats` để xem lớp nào còn thiếu.
 

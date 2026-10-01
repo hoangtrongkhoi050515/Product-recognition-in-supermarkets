@@ -1,20 +1,13 @@
 ﻿class_id,code,name,receipt_name,unit,price
-0,th_milk_180ml,Sữa TH true MILK 180 ml,SUA TH MILK KD 180ML,Lốc,36400
+0,th_milk_180ml,Sữa TH true MILK 180 ml (hộp lẻ),SUA TH MILK KD 180ML,Hộp,9100
 1,aquafina_500ml,Nước tinh khiết Aquafina 500 ml,NTK AQUAFINA 500ML,Chai,4000
 2,kitkat_17g,Sô cô la KitKat 17 g,SCL KITKAT 17GR,Gói,9900
-3,kitkat_chunky,Sô cô la KitKat Chunky,SCL KITKAT CHUNKY BA,Cái,26600
-4,redbull_250ml,Nước tăng lực Red Bull 250 ml,NTL RED BULL 250ML,Lon,10600
-5,chacheer_sunflower,Hạt hướng dương Chacheer,HAT HUONG DUONG CHAC,Gói,26400
-6,handy_haohao,Mì ly Handy Hảo Hảo,MI LY HANDY HAO HAO,Ly,8300
-7,handy_tomyum,Mì ly Handy Tomyum,MI LY HANDY TOMYUM H,Ly,8300
-8,lays_stax_lobster,Khoai tây chiên Lay's Stax tôm hùm,KTC LAY'S STAX TOM H,Hộp,30200
-9,corn_snack_choco,Snack bắp vị sô cô la,SNACK BAP VI SOCOLOA,Gói,10000
-10,vinamilk_less_sugar,Sữa bịch Vinamilk 100% ít đường,SUA BICH VNM 100% ID,Hộp,8700
-11,vinamilk_sugar,Sữa bịch Vinamilk 100% có đường,SUA BICH VNM 100% CD,Hộp,8700
-12,ong_tho_condensed,Sữa đặc Ông Thọ (túi),SUA DAC ONG THO CA P,Túi,19600
-13,oreo_blueberry,Bánh Oreo việt quất,BANH OREO VIET QUAT,Gói,12900
-14,omachi_seafood,Mì Omachi hải sản,MI OMACHI HAI SAN CH,Gói,8100
-15,omachi_beef,Mì Omachi bắp bò,MI OMACHI BAP BO RIE,Gói,8800
-16,chocopie_orion,Bánh Chocopie Orion,BANH CHOCOPIE ORION,Hộp,29900
-17,qua_than_chili,Mì khô Quá Thần ớt,MI KHO QUA THAN OT O,Gói,15000
-18,omachi_bowl_shrimp,Mì tô Omachi tôm,MI TO OMACHI TOM CAN,Tô,13900
+3,pepsi_320ml,Nước ngọt Pepsi lon 320 ml,,Lon,10300
+4,handy_haohao,Mì ly Handy Hảo Hảo,MI LY HANDY HAO HAO,Ly,8300
+5,handy_tomyum,Mì ly Handy Tomyum,MI LY HANDY TOMYUM H,Ly,8300
+6,lays_stax_lobster,Khoai tây chiên Lay's Stax tôm hùm,KTC LAY'S STAX TOM H,Hộp,30200
+7,vinamilk_sugar,Sữa bịch Vinamilk 100% có đường,SUA BICH VNM 100% CD,Bịch,8700
+8,oreo_blueberry,Bánh Oreo việt quất,BANH OREO VIET QUAT,Gói,12900
+9,omachi_beef,Mì Omachi bắp bò,MI OMACHI BAP BO RIE,Gói,8800
+10,chocopie_orion,Bánh Chocopie Orion,BANH CHOCOPIE ORION,Hộp,29900
+11,omachi_bowl_shrimp,Mì tô Omachi tôm,MI TO OMACHI TOM CAN,Tô,13900

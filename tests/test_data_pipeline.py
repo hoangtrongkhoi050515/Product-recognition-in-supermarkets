@@ -11,7 +11,7 @@ from src.data.yolo_labels import Box, pair_images_labels, read_label_file
 
 def test_catalog_hop_le():
     cat = load_catalog()
-    assert len(cat) == 19
+    assert len(cat) == 12
     assert cat.by_id(0).code == "th_milk_180ml"
     assert cat.by_code("aquafina_500ml").price == 4000
 
@@ -19,7 +19,7 @@ def test_catalog_hop_le():
 def test_doc_nhan_phat_hien_loi(tmp_path: Path):
     f = tmp_path / "a.txt"
     f.write_text("0 0.5 0.5 0.2 0.2\n25 0.5 0.5 0.2 0.2\n1 1.5 0.5 0.2 0.2\n2 0.5 0.5\n", encoding="utf-8")
-    boxes, issues = read_label_file(f, num_classes=19)
+    boxes, issues = read_label_file(f, num_classes=12)
     assert len(boxes) == 1
     assert [i.level for i in issues] == ["ERROR"] * 3
 
@@ -46,9 +46,9 @@ def test_chia_tap_phan_tang(seed):
     import random
     rng = random.Random(seed)
     items = []
-    for k in range(600):  # 600 ảnh giả, 1–5 đối tượng, lớp 18 hiếm
+    for k in range(600):  # 600 ảnh giả, 1–5 đối tượng, lớp 11 hiếm
         n = rng.randint(1, 5)
-        boxes = [Box(rng.choice(range(18)) if rng.random() > 0.03 else 18, .5, .5, .1, .1) for _ in range(n)]
+        boxes = [Box(rng.choice(range(11)) if rng.random() > 0.03 else 11, .5, .5, .1, .1) for _ in range(n)]
         items.append((Path(f"{k}.jpg"), boxes))
     ratios = {"train": 0.7, "val": 0.15, "test": 0.15}
     parts = stratified_split(items, ratios, seed)

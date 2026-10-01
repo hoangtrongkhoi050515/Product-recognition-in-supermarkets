@@ -1,7 +1,7 @@
 # Nhận diện sản phẩm siêu thị – Quầy thanh toán tự động (Nhóm 14)
 
 Học phần Học máy – Trường ĐH CNTT&TT, ĐH Thái Nguyên. GVHD: TS. Ngô Hữu Huy.
-Kế hoạch và tiến độ: xem [KE_HOACH_DU_AN.md](KE_HOACH_DU_AN.md).
+
 
 ## Cấu trúc thư mục
 
@@ -9,7 +9,7 @@ Kế hoạch và tiến độ: xem [KE_HOACH_DU_AN.md](KE_HOACH_DU_AN.md).
 NHOM_14_DU_AN_HOC_MAY/
 ├── configs/
 │   ├── config.yaml        # MỌI tham số: đường dẫn, tỉ lệ chia, ngưỡng...
-│   └── products.csv       # 19 lớp + bảng giá (nguồn dữ liệu duy nhất về lớp)
+│   └── products.csv       # 12 lớp + bảng giá (nguồn dữ liệu duy nhất về lớp)
 ├── data/
 │   ├── raw/images/        # ảnh gốc (nhóm chụp)
 │   ├── raw/labels/        # nhãn YOLO .txt xuất từ công cụ gán nhãn
@@ -36,7 +36,9 @@ NHOM_14_DU_AN_HOC_MAY/
 Các thư mục đánh dấu `[khung rỗng]` chỉ có `__init__.py`, mã nguồn sẽ bổ sung theo tiến độ trong `KE_HOACH_DU_AN.md`.
 
 ## Cài đặt
-
+#Clone repo
+git clone https://github.com/hoangtrongkhoi050515/Product-recognition-in-supermarkets.git
+#Giải nén và mở Terminal tại thư mục
 ```bash
 python -m venv .venv
 .venv\Scripts\activate          # Windows  (Linux/Mac: source .venv/bin/activate)
