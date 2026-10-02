@@ -29,7 +29,10 @@ Dự án sẽ có bước chuyển đổi `class_id` theo tên lớp (`code`) �
 - Ảnh chụp bằng điện thoại có thông tin xoay (EXIF). Nếu dùng Roboflow, bật **Auto-Orient**;
   nếu dùng LabelImg, kiểm tra ảnh hiển thị đúng chiều trước khi vẽ.
 - **Không** bật resize/augmentation trong Roboflow khi xuất – việc này do code của dự án xử lý.
-- Xuất xong: ảnh vào `data/raw/images/`, file `.txt` vào `data/raw/labels/` (cùng tên với ảnh).
+- Xuất xong: giải nén bản xuất vào `data/roboflow_export_v1/`, rồi chạy `python -m src.data.import_roboflow`.
+  Lệnh này tự đổi số thứ tự lớp theo `products.csv`, gộp train/valid/test và chép ảnh + nhãn vào `data/raw/`.
+  Có thể thêm `--dry-run` để chỉ kiểm tra và xem thống kê trước khi ghi file.
+- Có thể vẽ bằng công cụ khung chữ nhật **hoặc** đa giác (Polygon / Smart Polygon): lệnh nhập sẽ tự đổi đa giác thành khung chữ nhật nhỏ nhất ôm đa giác. Công cụ khung chữ nhật nhanh hơn.
 
 ## 4. Kiểm tra sau khi gán
 ```bash

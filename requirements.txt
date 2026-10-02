@@ -1,4 +1,4 @@
-# Python 3.10 – 3.12
+# Python 3.14.7
 # Cài: pip install -r requirements.txt
 # Nếu máy có GPU NVIDIA: cài PyTorch bản CUDA TRƯỚC theo hướng dẫn tại https://pytorch.org/get-started/locally/
 

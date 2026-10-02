@@ -3,6 +3,7 @@ data/raw/images/
 data/raw/labels/
 data/yolo/
 data/crops/
+data/roboflow_export*/
 models/*.pt
 models/*.pkl
 models/*.onnx

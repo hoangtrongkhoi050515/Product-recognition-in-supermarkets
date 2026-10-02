@@ -11,6 +11,7 @@ NHOM_14_DU_AN_HOC_MAY/
 │   ├── config.yaml        # MỌI tham số: đường dẫn, tỉ lệ chia, ngưỡng...
 │   └── products.csv       # 12 lớp + bảng giá (nguồn dữ liệu duy nhất về lớp)
 ├── data/
+│   ├── roboflow_export_v1/ # bản xuất YOLOv8 từ Roboflow (giải nén, không đưa lên Git)
 │   ├── raw/images/        # ảnh gốc (nhóm chụp)
 │   ├── raw/labels/        # nhãn YOLO .txt xuất từ công cụ gán nhãn
 │   ├── yolo/              # [tự sinh] train/val/test + data.yaml
@@ -51,7 +52,8 @@ Luôn chạy lệnh tại thư mục gốc dự án.
 
 | Bước | Lệnh | Kết quả |
 |---|---|---|
-| 1. Chụp ảnh, gán nhãn | xem `docs/` | `data/raw/images`, `data/raw/labels` |
+| 1. Chụp ảnh, gán nhãn | xem `docs/` | bản xuất YOLOv8 từ Roboflow |
+| 1b. Nhập bản xuất Roboflow | `python -m src.data.import_roboflow` | `data/raw/images`, `data/raw/labels` |
 | 2. Kiểm tra nhãn + thống kê | `python -m src.data.dataset_stats` | `Logs/data_check/raw/` |
 | 3. Chia Train/Val/Test | `python -m src.data.split_dataset --clean` | `data/yolo/` + `data.yaml` |
 | 4. Tạo ảnh cắt (phân loại) | `python -m src.data.make_crops --clean` | `data/crops/` |

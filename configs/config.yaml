@@ -12,6 +12,7 @@ paths:
   products: configs/products.csv # danh mục lớp + bảng giá (nguồn dữ liệu duy nhất)
   raw_images: data/raw/images    # ảnh gốc sau khi chụp
   raw_labels: data/raw/labels    # nhãn YOLO (.txt) xuất từ công cụ gán nhãn
+  roboflow_export: data/roboflow_export_v1  # thư mục giải nén bản xuất YOLOv8 từ Roboflow
   yolo_dir: data/yolo            # bộ dữ liệu YOLO đã chia tập (sinh tự động)
   crops_dir: data/crops          # ảnh cắt cho nhánh phân loại (sinh tự động)
   models_dir: models             # trọng số mô hình đã huấn luyện
