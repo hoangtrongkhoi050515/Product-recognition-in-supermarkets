@@ -30,3 +30,16 @@ crops:                           # tạo dữ liệu phân loại từ khung bao
 data_check:
   image_exts: [".jpg", ".jpeg", ".png", ".bmp", ".webp"]
   min_box_size: 0.01             # cảnh báo khung có cạnh < 1% kích thước ảnh (nghi nhãn lỗi)
+
+detection:                       # huấn luyện YOLO (đã chốt 08/10/2026: so sánh YOLO11n và YOLO26n)
+  models:                        # tên ngắn -> trọng số pretrained COCO của Ultralytics
+    yolo11n: yolo11n.pt
+    yolo26n: yolo26n.pt
+  imgsz: 640                     # kích thước ảnh đầu vào
+  epochs: 100
+  patience: 20                   # dừng sớm nếu 20 epoch liên tiếp không cải thiện
+  batch: 16
+  device: null                   # null = Ultralytics tự chọn (GPU nếu có); có thể đặt 0 hoặc "cpu"
+  workers: 2                     # số luồng đọc dữ liệu (Colab ít CPU)
+  conf: 0.25                     # ngưỡng tin cậy khi dự đoán
+  iou: 0.7                       # ngưỡng IoU khi lọc khung trùng lúc đánh giá
