@@ -29,7 +29,7 @@ NHOM_14_DU_AN_HOC_MAY/
 │   ├── data/              # kiểm tra nhãn, thống kê, chia tập, cắt ảnh
 │   ├── classic/           # [khung rỗng] KNN / SVM / Random Forest
 │   ├── deep/              # [khung rỗng] CNN, Transfer Learning
-│   ├── detection/         # [khung rỗng] YOLO
+│   ├── detection/         # YOLO: train.py, evaluate.py
 │   └── billing/           # [khung rỗng] tính tiền, hóa đơn
 └── tests/                 # kiểm thử tự động
 ```
@@ -60,3 +60,14 @@ Luôn chạy lệnh tại thư mục gốc dự án.
 | (Khi chuyển máy/Colab) | `python -m src.data.split_dataset --yaml-only` | sinh lại `data.yaml` |
 
 Kiểm thử: `python -m pytest -q`
+
+## Huấn luyện YOLO (Colab)
+
+Mở `notebooks/colab_train_yolo.ipynb` trên Google Colab (GPU T4), hoặc chạy tay:
+
+| Bước | Lệnh | Kết quả |
+|---|---|---|
+| Huấn luyện | `python -m src.detection.train --model yolo11n` (hoặc `yolo26n`) | `models/<tên mô hình>/weights/best.pt` |
+| Đánh giá | `python -m src.detection.evaluate --model yolo11n --split test` | `Logs/detection/<tên>_test/` (metrics.json, per_class.csv, ma trận nhầm lẫn) |
+
+Tham số (kích thước ảnh, epoch, batch...) nằm ở mục `detection` của `configs/config.yaml`.

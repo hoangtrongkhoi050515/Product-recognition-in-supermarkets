@@ -1,1 +1,1 @@
-"""Nhánh phát hiện đối tượng: huấn luyện, đánh giá và suy luận YOLO (GĐ 4)."""
+"""Nhánh B: phát hiện sản phẩm bằng YOLO (huấn luyện, đánh giá)."""
