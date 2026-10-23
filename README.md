@@ -1,6 +1,7 @@
-# Nhận diện sản phẩm siêu thị – Quầy thanh toán tự động (Nhóm 14)
+# Xây dựng hệ thống quầy thanh toán tự động sử dụng mô hình YOLO 26n (Nhóm 14)
 
-Học phần Học máy – Trường ĐH CNTT&TT, ĐH Thái Nguyên. GVHD: TS. Ngô Hữu Huy.
+Học phần Học máy – Trường ĐH CNTT&TT, ĐH Thái Nguyên. 
+GVHD: TS. Ngô Hữu Huy.
 
 
 ## Cấu trúc thư mục
