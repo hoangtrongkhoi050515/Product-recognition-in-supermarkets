@@ -20,6 +20,8 @@ ultralytics>=8.3
 
 # --- Giao diện (GĐ 5) ---
 streamlit>=1.35
+reportlab>=4.0
+segno>=1.6
 
 # --- Kiểm thử ---
 pytest>=7.4

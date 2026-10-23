@@ -16,7 +16,7 @@ NHOM_14_DU_AN_HOC_MAY/
 │   ├── raw/labels/        # nhãn YOLO .txt xuất từ công cụ gán nhãn
 │   ├── yolo/              # [tự sinh] train/val/test + data.yaml
 │   └── crops/             # [tự sinh] ảnh cắt cho nhánh phân loại
-├── app/                   # giao diện Streamlit (GĐ 5)
+├── app/                   # giao diện Streamlit: streamlit_app.py (điều hướng), kiosk.py (quầy), admin.py (quản trị), common.py
 ├── docs/                  # hướng dẫn chụp ảnh, gán nhãn
 │   └── figures/           # hình minh họa báo cáo + script vẽ lại
 ├── Documents/             # báo cáo Word
@@ -29,8 +29,8 @@ NHOM_14_DU_AN_HOC_MAY/
 │   ├── data/              # kiểm tra nhãn, thống kê, chia tập, cắt ảnh
 │   ├── classic/           # [khung rỗng] KNN / SVM / Random Forest
 │   ├── deep/              # [khung rỗng] CNN, Transfer Learning
-│   ├── detection/         # [khung rỗng] YOLO
-│   └── billing/           # [khung rỗng] tính tiền, hóa đơn
+│   ├── detection/         # YOLO: train.py, evaluate.py
+│   └── billing/           # tính tiền (billing.py), hóa đơn PDF (receipt.py)
 └── tests/                 # kiểm thử tự động
 ```
 
@@ -60,3 +60,27 @@ Luôn chạy lệnh tại thư mục gốc dự án.
 | (Khi chuyển máy/Colab) | `python -m src.data.split_dataset --yaml-only` | sinh lại `data.yaml` |
 
 Kiểm thử: `python -m pytest -q`
+
+## Huấn luyện YOLO (Colab)
+
+Mở `notebooks/colab_train_yolo.ipynb` trên Google Colab (GPU T4), hoặc chạy tay:
+
+| Bước | Lệnh | Kết quả |
+|---|---|---|
+| Huấn luyện | `python -m src.detection.train --model yolo11n` (hoặc `yolo26n`) | `models/<tên mô hình>/weights/best.pt` |
+| Đánh giá | `python -m src.detection.evaluate --model yolo11n --split test` | `Logs/detection/<tên>_test/` (metrics.json, per_class.csv, ma trận nhầm lẫn) |
+
+Tham số (kích thước ảnh, epoch, batch...) nằm ở mục `detection` của `configs/config.yaml`.
+
+## Chạy chương trình quầy thanh toán (Streamlit)
+
+1. Chép trọng số YOLO26n (`best.pt`, lấy từ Drive: `NHOM_14_ket_qua_yolo/yolo26n/weights/`) vào `models/yolo26n/weights/best.pt`.
+2. Cài thư viện: `pip install -r requirements.txt`
+3. Tại thư mục gốc dự án: `streamlit run app/streamlit_app.py`
+
+Chương trình có hai trang, chọn ở thanh trên cùng:
+
+- **Quầy thanh toán** (dành cho khách): chọn ảnh, hệ thống nhận diện và lập giỏ hàng; khách sửa số lượng, đổi hoặc xóa dòng nhận sai, thêm sản phẩm bị sót, rồi bấm Thanh toán để nhận hóa đơn PDF (lưu vào `Logs/receipts/`) và mã QR thanh toán mô phỏng.
+- **Quản trị** (mã PIN ở `app.admin_pin` trong `configs/config.yaml`, mặc định `1414`): chỉnh ngưỡng độ tin cậy và thử trên ảnh, xem chỉ số mô hình, lịch sử hóa đơn (`Logs/receipts/lich_su.csv`), thống kê bán hàng và bảng giá. Cài đặt lưu ở `Logs/cai_dat.json` và có hiệu lực ngay ở trang Quầy thanh toán.
+
+Tham số mặc định (mô hình, ngưỡng tin cậy, tên cửa hàng) nằm ở mục `app` của `configs/config.yaml`. Sau khi cập nhật mã nguồn, hãy tắt hẳn Streamlit rồi chạy lại để nạp các tệp mới.

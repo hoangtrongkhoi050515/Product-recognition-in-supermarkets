@@ -4,8 +4,8 @@ Mục tiêu: bộ ảnh giống điều kiện **quầy thanh toán thật** –
 
 ## 1. Chuẩn bị
 - Mua/mượn đủ 12 sản phẩm trong `configs/products.csv` (nên có 2–3 đơn vị mỗi loại để chụp nhiều món cùng lúc).
-- **Cố định một "khay thanh toán"**: mặt bàn/tấm nền, điện thoại hoặc webcam đặt ở độ cao ~40–60 cm, nhìn từ trên xuống hoặc chéo nhẹ.
-- Thiết bị: *(nhóm ghi lại: tên điện thoại/webcam, độ phân giải)* – ghi vào báo cáo mục 2.2.1.
+- **Cố định một "khay thanh toán"**: mặt bàn/tấm nền, điện thoại đặt ở độ cao ~40–60 cm, nhìn từ trên xuống hoặc chéo nhẹ.
+- Thiết bị: *(nhóm ghi lại: tên điện thoại, độ phân giải)* – ghi vào báo cáo mục 2.2.1.
 - Tắt chế độ làm đẹp, HDR quá mức; ảnh JPG, độ phân giải ≥ 1280 px cạnh dài là đủ.
 
 ## 2. Đặt tên file

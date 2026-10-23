@@ -23,7 +23,7 @@
 
 | # | Hạng mục | Đề xuất của Claude | Cần chốt trước |
 |---|---|---|---|
-| Q2 | Dạng đầu vào | **Bắt buộc:** ảnh tải lên + chụp 1 khung hình từ webcam. **Mở rộng (tuần 9, nếu kịp):** camera liên tục | Tuần 7 |
+| Q2 | Dạng đầu vào | **Bắt buộc:** ảnh tải lên. Đã bỏ chức năng webcam (quyết định ngày 22/10/2026). **Mở rộng (nếu kịp):** camera liên tục | Tuần 7 |
 | Q3 | Phiên bản YOLO | So sánh **YOLO11n** (ổn định, nhiều tài liệu) với **YOLO26n** (mới nhất, 01/2026, không cần NMS) | Tuần 5 |
 | Q6 | Tỉ lệ chia tập | 70 / 15 / 15 (đang để mặc định trong `configs/config.yaml`) | Tuần 4 |
 

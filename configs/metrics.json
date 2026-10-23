@@ -1,0 +1,189 @@
+{
+ "_nguon": "Số liệu lấy từ báo cáo mục 3.2-3.4 (tập Test 151 ảnh, seed 42, imgsz 640). Cập nhật tại đây nếu huấn luyện lại.",
+ "model": "YOLO26n",
+ "test": {
+  "precision": 0.905,
+  "recall": 0.869,
+  "map50": 0.922,
+  "map5095": 0.82,
+  "ms": 10.4
+ },
+ "val": {
+  "precision": 0.871,
+  "recall": 0.948,
+  "map50": 0.954,
+  "map5095": 0.901
+ },
+ "per_class": [
+  {
+   "class_id": 0,
+   "name": "TH true MILK",
+   "precision": 0.729,
+   "recall": 0.82,
+   "map50": 0.843,
+   "map5095": 0.526,
+   "objects": 429,
+   "images": 165
+  },
+  {
+   "class_id": 1,
+   "name": "Aquafina",
+   "precision": 0.952,
+   "recall": 1.0,
+   "map50": 0.995,
+   "map5095": 0.896,
+   "objects": 365,
+   "images": 364
+  },
+  {
+   "class_id": 2,
+   "name": "KitKat",
+   "precision": 0.944,
+   "recall": 0.849,
+   "map50": 0.869,
+   "map5095": 0.78,
+   "objects": 357,
+   "images": 333
+  },
+  {
+   "class_id": 3,
+   "name": "Pepsi",
+   "precision": 0.909,
+   "recall": 0.836,
+   "map50": 0.938,
+   "map5095": 0.816,
+   "objects": 386,
+   "images": 385
+  },
+  {
+   "class_id": 4,
+   "name": "Handy Hảo Hảo",
+   "precision": 0.873,
+   "recall": 0.597,
+   "map50": 0.776,
+   "map5095": 0.734,
+   "objects": 277,
+   "images": 277
+  },
+  {
+   "class_id": 5,
+   "name": "Handy Tomyum",
+   "precision": 0.813,
+   "recall": 0.939,
+   "map50": 0.9,
+   "map5095": 0.818,
+   "objects": 351,
+   "images": 349
+  },
+  {
+   "class_id": 6,
+   "name": "Lay's Stax",
+   "precision": 0.933,
+   "recall": 0.853,
+   "map50": 0.951,
+   "map5095": 0.901,
+   "objects": 295,
+   "images": 294
+  },
+  {
+   "class_id": 7,
+   "name": "Vinamilk",
+   "precision": 0.925,
+   "recall": 0.884,
+   "map50": 0.969,
+   "map5095": 0.933,
+   "objects": 477,
+   "images": 449
+  },
+  {
+   "class_id": 8,
+   "name": "Oreo",
+   "precision": 0.927,
+   "recall": 0.882,
+   "map50": 0.943,
+   "map5095": 0.86,
+   "objects": 352,
+   "images": 349
+  },
+  {
+   "class_id": 9,
+   "name": "Omachi bắp bò",
+   "precision": 0.954,
+   "recall": 1.0,
+   "map50": 0.993,
+   "map5095": 0.856,
+   "objects": 238,
+   "images": 237
+  },
+  {
+   "class_id": 10,
+   "name": "Chocopie",
+   "precision": 1.0,
+   "recall": 0.888,
+   "map50": 0.916,
+   "map5095": 0.809,
+   "objects": 302,
+   "images": 300
+  },
+  {
+   "class_id": 11,
+   "name": "Omachi tô tôm",
+   "precision": 0.902,
+   "recall": 0.88,
+   "map50": 0.971,
+   "map5095": 0.916,
+   "objects": 273,
+   "images": 273
+  }
+ ],
+ "compare": {
+  "YOLO26n": {
+   "precision": 0.905,
+   "recall": 0.869,
+   "map50": 0.922,
+   "map5095": 0.82,
+   "val_map50": 0.954,
+   "val_map5095": 0.901,
+   "epochs": 64,
+   "best_epoch": 44,
+   "train_sec": 276,
+   "gflops": 6.1,
+   "ms": 10.4
+  },
+  "YOLO11n": {
+   "precision": 0.848,
+   "recall": 0.835,
+   "map50": 0.897,
+   "map5095": 0.769,
+   "val_map50": 0.965,
+   "val_map5095": 0.874,
+   "epochs": 48,
+   "best_epoch": 28,
+   "train_sec": 201,
+   "gflops": 6.5,
+   "ms": 8.4
+  }
+ },
+ "split": [
+  {
+   "set": "Train",
+   "images": 682,
+   "boxes": 2862
+  },
+  {
+   "set": "Validation",
+   "images": 151,
+   "boxes": 621
+  },
+  {
+   "set": "Test",
+   "images": 151,
+   "boxes": 619
+  }
+ ],
+ "dataset": {
+  "images": 984,
+  "boxes": 4102,
+  "classes": 12
+ }
+}
