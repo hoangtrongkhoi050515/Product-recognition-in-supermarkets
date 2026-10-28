@@ -10,5 +10,6 @@ pyyaml>=6.0
 numpy>=1.24
 pandas>=2.0
 pillow>=10.0
+pi-heif>=0.18          # đọc ảnh HEIC từ iPhone (ultralytics cũng cần khi gặp tệp HEIC)
 reportlab>=4.0
 segno>=1.6

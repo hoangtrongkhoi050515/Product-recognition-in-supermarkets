@@ -127,6 +127,13 @@ def reset_cart() -> None:
     ss.up_n = ss.get("up_n", 0) + 1   # đổi key của ô chọn ảnh để xóa ảnh cũ
 
 
+try:   # ảnh HEIC/HEIF của iPhone: cần thư viện pi-heif (có trong app/requirements.txt)
+    from pi_heif import register_heif_opener
+    register_heif_opener()
+except ImportError:
+    pass
+
+
 def load_image(file) -> np.ndarray:
     img = ImageOps.exif_transpose(Image.open(file)).convert("RGB")   # xoay đúng chiều ảnh chụp điện thoại
     return np.array(img)

@@ -54,7 +54,7 @@ with tab_set:
         st.info(f"Gợi ý: F1 trên tập Test cao nhất ({f1['f1']:.2f}) tại ngưỡng {f1['conf']:.3f}, nên ngưỡng mặc định là 0,45. "
                 "Cài đặt được lưu vào tệp Logs/cai_dat.json và có hiệu lực ngay ở trang Quầy thanh toán.")
         st.markdown("#### Thử ngưỡng trên một ảnh")
-        up = st.file_uploader("Ảnh thử ", type=["jpg", "jpeg", "png", "webp", "bmp"], key="adm_up")
+        up = st.file_uploader("Ảnh thử ", type=["jpg", "jpeg", "png", "webp", "bmp", "heic", "heif"], key="adm_up")
         if up is not None and up.file_id != ss.get("adm_id"):
             with st.spinner("Đang nhận diện..."):
                 img = load_image(up)

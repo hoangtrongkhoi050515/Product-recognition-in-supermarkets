@@ -11,7 +11,8 @@ from src.detection.predict import Detection
 
 _PALETTE = ["#ef4444", "#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#ec4899",
             "#14b8a6", "#f97316", "#6366f1", "#84cc16", "#06b6d4", "#a855f7"]
-_FONTS = ["C:/Windows/Fonts/arial.ttf", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+_BUNDLED = Path(__file__).resolve().parent.parent.parent / "app" / "assets" / "fonts" / "DejaVuSans.ttf"
+_FONTS = [str(_BUNDLED), "C:/Windows/Fonts/arial.ttf", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
           "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf", "/Library/Fonts/Arial.ttf"]
 
 
@@ -19,7 +20,7 @@ def _font(size: int):
     for p in _FONTS:
         if Path(p).exists():
             return ImageFont.truetype(p, size)
-    return ImageFont.load_default()
+    return ImageFont.load_default(size)   # Pillow >= 10.1: phông mặc định co giãn được
 
 
 def short_name(name: str) -> str:

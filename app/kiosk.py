@@ -5,6 +5,7 @@ import io
 from datetime import datetime
 
 import streamlit as st
+from PIL import UnidentifiedImageError
 
 from common import (CUR, HISTORY, RECEIPT_DIR, app_cfg, banner, catalog, conf_badge, product_icon, reset_cart, scan, settings,
                     ss, thumbnail)
@@ -36,12 +37,15 @@ if not has:
 <div class='howto'><div><b>1. Chọn ảnh</b>Hệ thống nhận diện ngay, không cần bấm thêm</div>
 <div><b>2. Kiểm tra giỏ hàng</b>Sửa số lượng, đổi hoặc xóa dòng nhận sai</div>
 <div><b>3. Thanh toán</b>Nhận hóa đơn PDF và mã QR thanh toán</div></div></div>""", unsafe_allow_html=True)
-    up = st.file_uploader("Chọn ảnh khu vực thanh toán", type=["jpg", "jpeg", "png", "webp", "bmp"], key=f"up_{ss.get('up_n', 0)}",
+    up = st.file_uploader("Chọn ảnh khu vực thanh toán", type=["jpg", "jpeg", "png", "webp", "bmp", "heic", "heif"], key=f"up_{ss.get('up_n', 0)}",
                           help="Mẹo: nền bàn có màu, mỗi sản phẩm lộ ít nhất một nửa.")
     if up is not None:
-        with st.spinner("Đang nhận diện sản phẩm..."):
-            scan(up)
-        st.rerun()
+        try:
+            with st.spinner("Đang nhận diện sản phẩm..."):
+                scan(up)
+            st.rerun()
+        except UnidentifiedImageError:
+            st.error("Không đọc được tệp ảnh này. Hãy chọn ảnh JPG, PNG hoặc HEIC.")
     cards = "".join(f"<div class='pcard'><div class='ic'>{product_icon(p, 84)}</div><div class='nm'>{short_name(p.name)}</div>"
                     f"<div class='pr'>{fmt_money(p.price, CUR)}</div></div>" for p in catalog)
     st.markdown("**Sản phẩm có bán tại quầy**")
@@ -71,9 +75,12 @@ elif not paid:
                      disabled=bill.total_quantity == 0, use_container_width=True):
             now = datetime.now()
             pdf = make_receipt_pdf(bill, app_cfg["store_name"], ss.invoice_no, when=now, currency=CUR)
-            RECEIPT_DIR.mkdir(parents=True, exist_ok=True)
-            (RECEIPT_DIR / f"{ss.invoice_no}.pdf").write_bytes(pdf)
-            append_invoice(HISTORY, bill, ss.invoice_no, now)
+            try:   # ổ đĩa cloud có thể chỉ đọc: vẫn cho khách tải hóa đơn dù không lưu được lịch sử
+                RECEIPT_DIR.mkdir(parents=True, exist_ok=True)
+                (RECEIPT_DIR / f"{ss.invoice_no}.pdf").write_bytes(pdf)
+                append_invoice(HISTORY, bill, ss.invoice_no, now)
+            except OSError:
+                st.toast("Không lưu được lịch sử hóa đơn trên máy chủ.", icon="⚠️")
             ss.invoice_pdf, ss.invoice_bill = pdf, bill
             st.rerun()
         low = [c for c in auto if (lambda m: m and sum(m) / len(m) < 0.5)([d.confidence for d in kept if d.class_id == c])]
