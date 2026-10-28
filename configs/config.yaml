@@ -48,7 +48,7 @@ app:                             # chương trình mô phỏng quầy thanh toá
   model: yolo26n                 # mô hình chính, trọng số models/yolo26n/weights/best.pt
   conf: 0.45                     # ngưỡng độ tin cậy mặc định (người dùng chỉnh được trên giao diện)
   imgsz: 640
-  store_name: "Nhóm 14 - Mô phỏng quầy thanh toán"
+  store_name: "Mô phỏng quầy thanh toán"
   receipt_dir: Logs/receipts     # nơi lưu hóa đơn PDF đã xuất
   admin_pin: "1414"             # mã PIN vào trang Quản trị (khóa đơn giản cho bản mô phỏng)
   currency: "đ"

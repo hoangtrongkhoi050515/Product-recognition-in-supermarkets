@@ -54,7 +54,7 @@ with tab_set:
         st.info(f"Gợi ý: F1 trên tập Test cao nhất ({f1['f1']:.2f}) tại ngưỡng {f1['conf']:.3f}, nên ngưỡng mặc định là 0,45. "
                 "Cài đặt được lưu vào tệp Logs/cai_dat.json và có hiệu lực ngay ở trang Quầy thanh toán.")
         st.markdown("#### Thử ngưỡng trên một ảnh")
-        up = st.file_uploader("Ảnh thử (không tạo hóa đơn)", type=["jpg", "jpeg", "png", "webp", "bmp"], key="adm_up")
+        up = st.file_uploader("Ảnh thử ", type=["jpg", "jpeg", "png", "webp", "bmp"], key="adm_up")
         if up is not None and up.file_id != ss.get("adm_id"):
             with st.spinner("Đang nhận diện..."):
                 img = load_image(up)
@@ -96,7 +96,7 @@ with tab_set:
 # ------------------------------------------------------------------ CHỈ SỐ MÔ HÌNH
 with tab_model:
     t = METRICS["test"]
-    st.markdown(f"#### Chất lượng mô hình {METRICS['model']} trên tập Test")
+    st.markdown(f"#### Chất lượng mô hình {METRICS['model']}")
     k = st.columns(5)
     k[0].metric("mAP@0.5", f"{t['map50']:.3f}", help="Độ chính xác trung bình tại IoU 0,5: càng gần 1 càng tốt.")
     k[1].metric("mAP@0.5:0.95", f"{t['map5095']:.3f}", help="Độ chính xác trung bình, tính cả độ khít của khung bao (IoU từ 0,5 đến 0,95).")
@@ -116,18 +116,18 @@ with tab_model:
     weak = pc.nsmallest(2, "mAP@0.5:0.95")["Sản phẩm"].tolist()
     st.caption(f"Hai lớp yếu nhất: {weak[0]} và {weak[1]}. Với các lớp này nên kiểm tra kỹ giỏ hàng trước khi xuất hóa đơn.")
 
-    st.markdown("#### So sánh YOLO26n và YOLO11n")
-    cmp_ = METRICS["compare"]
-    names = {"precision": "Precision (Test)", "recall": "Recall (Test)", "map50": "mAP@0.5 (Test)", "map5095": "mAP@0.5:0.95 (Test)",
-             "val_map50": "mAP@0.5 (Val)", "val_map5095": "mAP@0.5:0.95 (Val)"}
-    cmp_df = pd.DataFrame({n: {m: cmp_[m][k_] for m in cmp_} for k_, n in names.items()}).T
-    ce, cf = st.columns(2)
-    ce.dataframe(cmp_df.style.format("{:.3f}"), use_container_width=True)
-    cf.bar_chart(cmp_df, color=["#0f766e", "#94a3b8"], height=280)
-    cost = pd.DataFrame({m: {"Epoch đã chạy": cmp_[m]["epochs"], "Epoch tốt nhất": cmp_[m]["best_epoch"],
-                             "Huấn luyện (giây)": cmp_[m]["train_sec"], "GFLOPs": cmp_[m]["gflops"],
-                             "Suy luận (ms/ảnh)": cmp_[m]["ms"]} for m in cmp_})
-    st.dataframe(cost, use_container_width=True)
+    #st.markdown("#### So sánh YOLO26n và YOLO11n")
+    #cmp_ = METRICS["compare"]
+    #names = {"precision": "Precision (Test)", "recall": "Recall (Test)", "map50": "mAP@0.5 (Test)", "map5095": "mAP@0.5:0.95 (Test)",
+    #         "val_map50": "mAP@0.5 (Val)", "val_map5095": "mAP@0.5:0.95 (Val)"}
+    #cmp_df = pd.DataFrame({n: {m: cmp_[m][k_] for m in cmp_} for k_, n in names.items()}).T
+    #ce, cf = st.columns(2)
+    #ce.dataframe(cmp_df.style.format("{:.3f}"), use_container_width=True)
+    #cf.bar_chart(cmp_df, color=["#0f766e", "#94a3b8"], height=280)
+    #cost = pd.DataFrame({m: {"Epoch đã chạy": cmp_[m]["epochs"], "Epoch tốt nhất": cmp_[m]["best_epoch"],
+    #                         "Huấn luyện (giây)": cmp_[m]["train_sec"], "GFLOPs": cmp_[m]["gflops"],
+    #                         "Suy luận (ms/ảnh)": cmp_[m]["ms"]} for m in cmp_})
+    #st.dataframe(cost, use_container_width=True)
 
     st.markdown("#### Bộ dữ liệu")
     ds = METRICS["dataset"]

@@ -1,0 +1,14 @@
+# Thư viện cho bản chạy trên Streamlit Community Cloud (chỉ phần ứng dụng, không gồm huấn luyện/kiểm thử).
+# Streamlit Cloud ưu tiên tệp này (cùng thư mục với app/streamlit_app.py) hơn requirements.txt ở thư mục gốc.
+# Dùng PyTorch bản CPU để gói cài nhẹ hơn nhiều so với bản CUDA mặc định trên Linux.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+torchvision
+ultralytics>=8.4          # YOLO26 cần ultralytics 8.4 trở lên
+streamlit>=1.40
+pyyaml>=6.0
+numpy>=1.24
+pandas>=2.0
+pillow>=10.0
+reportlab>=4.0
+segno>=1.6
