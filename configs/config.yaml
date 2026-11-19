@@ -31,9 +31,8 @@ data_check:
   image_exts: [".jpg", ".jpeg", ".png", ".bmp", ".webp"]
   min_box_size: 0.01             # cảnh báo khung có cạnh < 1% kích thước ảnh (nghi nhãn lỗi)
 
-detection:                       # huấn luyện YOLO (đã chốt 08/10/2026: so sánh YOLO11n và YOLO26n)
+detection:                       # huấn luyện YOLO (chốt 22/10/2026: chỉ dùng YOLO26n)
   models:                        # tên ngắn -> trọng số pretrained COCO của Ultralytics
-    yolo11n: yolo11n.pt
     yolo26n: yolo26n.pt
   imgsz: 640                     # kích thước ảnh đầu vào
   epochs: 100
@@ -43,6 +42,24 @@ detection:                       # huấn luyện YOLO (đã chốt 08/10/2026: 
   workers: 2                     # số luồng đọc dữ liệu (Colab ít CPU)
   conf: 0.25                     # ngưỡng tin cậy khi dự đoán
   iou: 0.7                       # ngưỡng IoU khi lọc khung trùng lúc đánh giá
+
+  finetune:                      # ĐỀ XUẤT 01/11/2026 – huấn luyện thêm từ best.pt hiện có
+    base: yolo26n                # điểm xuất phát: models/yolo26n/weights/best.pt (không ghi đè)
+    epochs: 80
+    patience: 30                 # nới hơn lần đầu vì lr nhỏ, mAP tăng chậm
+    optimizer: AdamW             # đặt rõ để lr0 có hiệu lực (optimizer=auto sẽ bỏ qua lr0)
+    lr0: 0.0005                  # nhỏ hơn lần đầu ~10 lần: tinh chỉnh, không phá trọng số đã học
+    warmup_epochs: 1
+    cos_lr: true                 # giảm lr dần theo hàm cos ở cuối quá trình
+    augment:                     # tăng cường dữ liệu thêm so với mặc định của Ultralytics
+      degrees: 10                # xoay ±10° (sản phẩm đặt lệch góc trên bàn)
+      scale: 0.5                 # phóng/thu ±50%
+      mixup: 0.1                 # trộn 2 ảnh, chống học thuộc khi dữ liệu ít
+      hsv_h: 0.01                # giảm đổi màu (màu bao bì giúp phân biệt Hảo Hảo/Tomyum)
+      close_mosaic: 15           # tắt mosaic ở 15 epoch cuối để khung bao sát hơn
+    runs:                        # mỗi lượt lưu ở models/yolo26n_<tên lượt>/
+      ft640: {imgsz: 640}        # giữ kích thước như ứng dụng, chỉ đổi cách huấn luyện
+      ft832: {imgsz: 832}        # ảnh lớn hơn, giúp khung bao chính xác hơn (mAP50-95) nhưng chậm hơn
 
 app:                             # chương trình mô phỏng quầy thanh toán (Streamlit)
   model: yolo26n                 # mô hình chính, trọng số models/yolo26n/weights/best.pt

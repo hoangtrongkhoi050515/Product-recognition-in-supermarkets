@@ -32,11 +32,11 @@ def cart_qty(kept) -> tuple[dict, dict]:
 
 # ------------------------------------------------------------------ BƯỚC 1: CHỌN ẢNH
 if not has:
-    st.markdown("""<div class='hero'><h2>Xin chào! Mời bạn thanh toán</h2>
+    st.markdown("""<div class='hero'><h2>Tự thanh toán bằng một ảnh chụp</h2>
 <p>Đặt sản phẩm lên bàn, chụp một ảnh từ trên xuống rồi chọn ảnh bên dưới. Hệ thống tự nhận diện và tính tiền.</p>
-<div class='howto'><div><b>1. Chọn ảnh</b>Hệ thống nhận diện ngay, không cần bấm thêm</div>
-<div><b>2. Kiểm tra giỏ hàng</b>Sửa số lượng, đổi hoặc xóa dòng nhận sai</div>
-<div><b>3. Thanh toán</b>Nhận hóa đơn PDF và mã QR thanh toán</div></div></div>""", unsafe_allow_html=True)
+<div class='howto'><div><b><span>1</span> Chọn ảnh</b>Hệ thống nhận diện ngay, không cần bấm thêm</div>
+<div><b><span>2</span> Kiểm tra giỏ hàng</b>Sửa số lượng, đổi hoặc xóa dòng nhận sai</div>
+<div><b><span>3</span> Thanh toán</b>Nhận hóa đơn PDF và mã QR thanh toán</div></div></div>""", unsafe_allow_html=True)
     up = st.file_uploader("Chọn ảnh khu vực thanh toán", type=["jpg", "jpeg", "png", "webp", "bmp", "heic", "heif"], key=f"up_{ss.get('up_n', 0)}",
                           help="Mẹo: nền bàn có màu, mỗi sản phẩm lộ ít nhất một nửa.")
     if up is not None:
@@ -64,12 +64,12 @@ elif not paid:
                      "hoặc thêm sản phẩm thủ công ở bên phải.")
         st.image(draw_detections(ss.image, kept, catalog, faded), use_container_width=True,
                  caption=f"{ss.img_name}: nhận diện {len(kept)} sản phẩm trong {ss.infer_ms / 1000:.1f} giây")
-        if st.button("📷 Chọn ảnh khác", use_container_width=True):
+        if st.button("Chọn ảnh khác", icon=":material/photo_camera:", use_container_width=True):
             reset_cart()
             st.rerun()
     with right:
         bill = build_bill(qty, catalog)
-        st.markdown(f"<div class='total-card'><div class='lbl'>TỔNG TIỀN</div><div class='row'><div class='val'>{fmt_money(bill.total, CUR)}</div>"
+        st.markdown(f"<div class='total-card'><div class='lbl'>Tổng tiền</div><div class='row'><div class='val'>{fmt_money(bill.total, CUR)}</div>"
                     f"<div class='cnt'>{bill.total_quantity} sản phẩm</div></div></div>", unsafe_allow_html=True)
         if st.button(f"Thanh toán {fmt_money(bill.total, CUR)}", type="primary", icon=":material/payments:",
                      disabled=bill.total_quantity == 0, use_container_width=True):
@@ -80,7 +80,7 @@ elif not paid:
                 (RECEIPT_DIR / f"{ss.invoice_no}.pdf").write_bytes(pdf)
                 append_invoice(HISTORY, bill, ss.invoice_no, now)
             except OSError:
-                st.toast("Không lưu được lịch sử hóa đơn trên máy chủ.", icon="⚠️")
+                st.toast("Không lưu được lịch sử hóa đơn trên máy chủ.", icon=":material/warning:")
             ss.invoice_pdf, ss.invoice_bill = pdf, bill
             st.rerun()
         low = [c for c in auto if (lambda m: m and sum(m) / len(m) < 0.5)([d.confidence for d in kept if d.class_id == c])]
@@ -132,7 +132,8 @@ else:
     bill = ss.invoice_bill
     left, right = st.columns([1.2, 1], gap="large")
     with left:
-        st.markdown(f"<div class='paid'><div class='big'>✅</div><h3>Đã tạo hóa đơn {ss.invoice_no}</h3>"
+        st.markdown(f"<div class='paid'><div class='big'><svg width='24' height='24' viewBox='0 0 24 24' fill='none' "
+                    f"stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg></div><h3>Đã tạo hóa đơn {ss.invoice_no}</h3>"
                     f"<div class='hint'>Hóa đơn đã được lưu vào lịch sử của cửa hàng</div></div>", unsafe_allow_html=True)
         lines = "".join(f"<tr><td>{short_name(ln.name)}</td><td class='r'>{ln.quantity} × {fmt_money(ln.unit_price, CUR)}</td>"
                         f"<td class='r'>{fmt_money(ln.amount, CUR)}</td></tr>" for ln in bill.lines)
@@ -140,7 +141,7 @@ else:
                     f"<tr class='tot'><td>Tổng cộng ({bill.total_quantity} sản phẩm)</td><td></td><td class='r'>{fmt_money(bill.total, CUR)}</td></tr>"
                     f"</table></div>", unsafe_allow_html=True)
     with right:
-        st.markdown(f"<div class='total-card'><div class='lbl'>SỐ TIỀN CẦN THANH TOÁN</div><div class='val'>{fmt_money(bill.total, CUR)}</div></div>",
+        st.markdown(f"<div class='total-card'><div class='lbl'>Số tiền cần thanh toán</div><div class='val'>{fmt_money(bill.total, CUR)}</div></div>",
                     unsafe_allow_html=True)
         try:
             import segno
@@ -148,7 +149,7 @@ else:
             segno.make(f"MO PHONG|{ss.invoice_no}|{bill.total}", error="m").save(buf, kind="png", scale=7, border=2)
             q1, q2 = st.columns([1, 1.3], vertical_alignment="center")
             q1.image(buf.getvalue(), use_container_width=True)
-            q2.markdown("**Quét mã để thanh toán**  \n Rất vui được phục vụ bạn! ")
+            q2.markdown("**Quét mã để thanh toán**  \nCảm ơn bạn đã mua hàng")
         except ImportError:
             st.caption("Cài thư viện segno (pip install segno) để hiện mã QR thanh toán mô phỏng.")
         st.download_button("Tải hóa đơn (PDF)", ss.invoice_pdf, file_name=f"{ss.invoice_no}.pdf", mime="application/pdf",

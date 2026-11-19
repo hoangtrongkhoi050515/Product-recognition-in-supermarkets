@@ -30,7 +30,6 @@ RECEIPT_DIR = cfg.root / app_cfg.get("receipt_dir", "Logs/receipts")
 HISTORY = RECEIPT_DIR / "lich_su.csv"
 SETTINGS = cfg.root / "Logs" / "cai_dat.json"
 METRICS = json.loads((cfg.root / "configs" / "metrics.json").read_text(encoding="utf-8"))
-ICONS = {0: "🥛", 1: "💧", 2: "🍫", 3: "🥤", 4: "🍜", 5: "🍜", 6: "🥔", 7: "🧃", 8: "🍪", 9: "🍜", 10: "🍰", 11: "🍲"}
 ss = st.session_state
 ASSETS = Path(__file__).resolve().parent / "assets" / "products"
 
@@ -43,62 +42,79 @@ def product_img_uri(code: str) -> str:
 
 
 def product_icon(p, size: int = 56) -> str:
-    """HTML hiển thị ảnh sản phẩm; không có ảnh thì dùng biểu tượng cảm xúc."""
+    """HTML hiển thị ảnh sản phẩm; không có ảnh thì dùng ô xám có biểu tượng gói hàng (nét mảnh)."""
     uri = product_img_uri(p.code)
     if uri:
-        return f"<img src='{uri}' style='width:{size}px;height:{size}px;object-fit:contain;border-radius:10px;background:white'>"
-    return f"<span style='font-size:{size * .6:.0f}px'>{ICONS.get(p.class_id, '🛒')}</span>"
+        return f"<img src='{uri}' style='width:{size}px;height:{size}px;object-fit:contain;border-radius:8px;background:white'>"
+    ic = size // 2
+    return (f"<span class='ph' style='width:{size}px;height:{size}px'><svg width='{ic}' height='{ic}' viewBox='0 0 24 24' fill='none' "
+            "stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'>"
+            "<path d='M21 8 12 3 3 8v8l9 5 9-5z'/><path d='m3 8 9 5 9-5M12 13v8'/></svg></span>")
 
 
 def settings() -> dict:
     return load_settings(SETTINGS, {"conf": app_cfg.get("conf", 0.45)})
 
 
+# Giao diện: nền và khung dùng màu xám trung tính, màu teal #0f766e chỉ làm màu nhấn
+# (nút chính, tổng tiền, bước đang làm). Khoảng cách theo bội số 4px, chữ đậm tối đa 600.
 CSS = """
 <style>
-.block-container {padding-top: 4.6rem; max-width: 1440px;}
+:root {--accent: #0f766e; --ink: #0f172a; --ink-2: #475569; --muted: #64748b;
+       --raised: #f4f4f5; --line: rgba(15, 23, 42, .09); --num: ui-monospace, "SF Mono", Consolas, monospace;}
+.block-container {padding-top: 4.5rem; max-width: 1440px;}
 section[data-testid="stSidebar"], div[data-testid="stSidebarCollapsedControl"] {display: none;}
-.banner {background: linear-gradient(90deg,#0f766e,#14b8a6); color: white; border-radius: 16px;
-         padding: 14px 24px; display: flex; align-items: center; gap: 16px; margin-bottom: 14px;}
-.banner.admin {background: linear-gradient(90deg,#1e293b,#475569);}
-.banner h1 {color: white; font-size: 1.55rem; margin: 0; padding: 0;}
-.banner p {margin: 0; opacity: .9; font-size: .9rem;}
-.banner .right {margin-left: auto; text-align: right; font-size: .85rem; opacity: .9;}
-.steps {display: flex; gap: 10px; margin: 0 0 16px 0;}
-.step {flex: 1; border-radius: 10px; padding: 9px 14px; background: #f1f5f9; color: #94a3b8; font-weight: 600; font-size: .95rem;}
-.step.on {background: #ccfbf1; color: #0f766e; border: 1px solid #5eead4;}
-.step.done {background: #0f766e; color: white;}
-div[data-testid="stMetricValue"] {font-size: 1.6rem;}
-div[data-testid="stMetric"] {background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 12px; padding: 10px 16px;}
-.total-card {background: #0f766e; color: white; border-radius: 16px; padding: 16px 22px; margin: 0 0 12px 0;}
-.total-card .lbl {opacity: .85; font-size: .85rem; letter-spacing: .04em;}
+.banner {background: var(--accent); color: white; border-radius: 16px;
+         padding: 16px 24px; display: flex; align-items: center; gap: 16px; margin-bottom: 16px;}
+.banner.admin {background: #1e293b;}
+.banner h1 {color: white; font-size: 1.5rem; font-weight: 600; margin: 0; padding: 0;}
+.banner p {margin: 0; opacity: .85; font-size: .9rem;}
+.banner .right {margin-left: auto; text-align: right; font-size: .85rem; opacity: .85; font-variant-numeric: tabular-nums;}
+.steps {display: flex; gap: 8px; margin: 0 0 16px 0;}
+.step {flex: 1; border-radius: 8px; padding: 8px 16px; background: var(--raised); color: var(--muted);
+       font-weight: 500; font-size: .95rem; border: 1px solid transparent;}
+.step.on {background: white; color: var(--accent); border-color: var(--accent);}
+.step.done {background: var(--accent); color: white;}
+div[data-testid="stMetricValue"] {font-size: 1.6rem; font-weight: 500; font-variant-numeric: tabular-nums;}
+div[data-testid="stMetric"] {background: white; border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px;}
+.total-card {background: var(--accent); color: white; border-radius: 16px; padding: 16px 24px; margin: 0 0 12px 0;}
+.total-card .lbl {opacity: .85; font-size: .9rem;}
 .total-card .row {display: flex; justify-content: space-between; align-items: end;}
-.total-card .val {font-size: 2.6rem; font-weight: 700; line-height: 1.1;} .total-card .cnt {opacity: .9;}
-.cart-name {font-weight: 600; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-.cart-sub {color: #64748b; font-size: .82rem; white-space: nowrap;}
-.cart-amt {font-weight: 700; color: #0f766e; text-align: right; white-space: nowrap; position: relative; top: -7px;}
-.badge {display: inline-block; border-radius: 999px; padding: 1px 9px; font-size: .78rem; font-weight: 600; margin-left: 6px;}
-.b-hi {background: #dcfce7; color: #166534;} .b-mid {background: #fef9c3; color: #854d0e;} .b-lo {background: #fee2e2; color: #991b1b;}
-.hero {background: linear-gradient(135deg,#f0fdfa,#ccfbf1); border: 1px solid #99f6e4; border-radius: 18px; padding: 26px 30px; margin-bottom: 14px;}
-.hero h2 {margin: 0 0 4px 0; color: #0f766e; padding: 0;} .hero p {margin: 0; color: #134e4a;}
-.howto {display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 16px;}
-.howto div {background: white; border-radius: 12px; padding: 12px 14px; color: #134e4a; font-size: .92rem; border: 1px solid #ccfbf1;}
-.howto b {display: block; color: #0f766e; font-size: 1.05rem;}
-.pgrid {display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-top: 6px;}
-.pcard {background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 10px 8px; text-align: center;}
-.pcard .ic {line-height: 1.2; margin-bottom: 4px;} .pcard .ic img {border: 1px solid #f1f5f9;} .pcard .nm {font-size: .78rem; font-weight: 600; color: #0f172a; min-height: 2.3em; line-height: 1.1rem;}
-.pcard .pr {color: #0f766e; font-weight: 700; font-size: .85rem;}
-.receipt {background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 18px 22px;}
+.total-card .val {font-size: 2.6rem; font-weight: 600; line-height: 1.1; font-variant-numeric: tabular-nums;}
+.total-card .cnt {opacity: .85;}
+.cart-name {font-weight: 500; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.cart-sub {color: var(--muted); font-size: .82rem; white-space: nowrap; font-variant-numeric: tabular-nums;}
+.cart-amt {font-weight: 600; color: var(--ink); text-align: right; white-space: nowrap; position: relative; top: -7px;
+           font-variant-numeric: tabular-nums;}
+.badge {display: inline-block; border-radius: 4px; padding: 0 6px; font-size: .75rem; font-weight: 500; margin-left: 8px;}
+.b-hi {background: #dcfce7; color: #166534;} .b-mid {background: #fef3c7; color: #854d0e;} .b-lo {background: #fee2e2; color: #991b1b;}
+.hero {background: white; border: 1px solid var(--line); border-radius: 16px; padding: 24px 32px; margin-bottom: 16px;}
+.hero h2 {margin: 0 0 4px 0; color: var(--ink); font-weight: 600; padding: 0;} .hero p {margin: 0; color: var(--ink-2);}
+.howto {display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 16px;}
+.howto div {background: var(--raised); border-radius: 12px; padding: 12px 16px; color: var(--ink-2); font-size: .92rem;}
+.howto b {display: block; color: var(--ink); font-weight: 500; font-size: 1.05rem;}
+.howto b span {color: var(--accent); font-variant-numeric: tabular-nums; margin-right: 4px;}
+.pgrid {display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-top: 8px;}
+.pcard {background: white; border: 1px solid var(--line); border-radius: 12px; padding: 12px 8px; text-align: center;}
+.pcard .ic {line-height: 1.2; margin-bottom: 4px;} .pcard .ic img {border: 1px solid var(--line);}
+.pcard .nm {font-size: .8rem; font-weight: 500; color: var(--ink); min-height: 2.3em; line-height: 1.1rem;}
+.pcard .pr {color: var(--ink-2); font-size: .85rem; font-variant-numeric: tabular-nums;}
+.receipt {background: white; border: 1px solid var(--line); border-radius: 16px; padding: 16px 24px;}
 .receipt table {width: 100%; border-collapse: collapse; border: none; margin: 0;} .receipt tr {border: none; background: none !important;}
-.receipt td {padding: 7px 4px; border: none; border-bottom: 1px dashed #e2e8f0;}
-.receipt td.r {text-align: right;} .receipt .tot td {font-weight: 700; font-size: 1.2rem; color: #0f766e; border: none; padding-top: 12px;}
-.paid {background: #f0fdf4; border: 1px solid #86efac; border-radius: 16px; padding: 18px 22px; text-align: center;}
-.paid .big {font-size: 2.4rem;} .paid h3 {color: #166534; margin: 4px 0; padding: 0;}
-.hint {color: #64748b; font-size: .88rem;}
+.receipt td {padding: 8px 4px; border: none; border-bottom: 1px dashed var(--line);}
+.receipt td.r {text-align: right; font-variant-numeric: tabular-nums;}
+.receipt .tot td {font-weight: 600; font-size: 1.2rem; color: var(--accent); border: none; padding-top: 12px;}
+.paid {background: white; border: 1px solid var(--line); border-radius: 16px; padding: 20px 24px; text-align: center;}
+.paid .big {display: inline-flex; width: 48px; height: 48px; border-radius: 50%; background: #dcfce7; color: #16a34a;
+            align-items: center; justify-content: center;}
+.paid h3 {color: var(--ink); font-weight: 600; margin: 8px 0 4px 0; padding: 0;}
+.ph {display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; background: var(--raised); color: var(--muted);}
+.hint {color: var(--muted); font-size: .88rem;}
 div[data-testid='stImage'] img {max-height: 540px; object-fit: contain;}
-section[data-testid='stFileUploaderDropzone'] {border: 2px dashed #14b8a6; background: #f0fdfa; min-height: 110px; border-radius: 14px; padding: 24px;}
+section[data-testid='stFileUploaderDropzone'] {border: 1px dashed rgba(15, 23, 42, .25); background: var(--raised); min-height: 112px;
+                                               border-radius: 12px; padding: 24px;}
 button[data-testid='stBaseButton-primary'], button[data-testid='stBaseButton-primaryFormSubmit'] {min-height: 3rem;}
-button[data-testid='stBaseButton-primary'] p {font-size: 1.1rem; font-weight: 600;}
+button[data-testid='stBaseButton-primary'] p {font-size: 1.1rem; font-weight: 500;}
 </style>
 """
 
@@ -111,7 +127,7 @@ def banner(title: str, sub: str, admin: bool = False) -> None:
             '1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>') if admin else \
         '<circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.4a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H6"/>'
     st.markdown(f"""<div class="banner {'admin' if admin else ''}">
-<svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{icon}</svg>
+<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">{icon}</svg>
 <div><h1>{title}</h1><p>{sub}</p></div><div class="right">{app_cfg.get('store_name', '')}<br>{datetime.now():%d/%m/%Y}</div></div>""",
                 unsafe_allow_html=True)
 

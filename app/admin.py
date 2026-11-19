@@ -20,14 +20,14 @@ banner("Quản trị cửa hàng", "Cài đặt nhận diện · Chỉ số mô 
 if not ss.get("admin_ok"):
     _, mid, _ = st.columns([1, 1.1, 1])
     with mid.form("pin"):
-        st.markdown("#### 🔒 Đăng nhập quản trị")
+        st.markdown("#### :material/lock: Đăng nhập quản trị")
         pin = st.text_input("Mã PIN", type="password")
         if st.form_submit_button("Đăng nhập", type="primary", use_container_width=True):
             if pin == str(app_cfg.get("admin_pin", "1414")):
                 ss.admin_ok = True
                 st.rerun()
             st.error("Sai mã PIN.")
-    mid.caption("Vui lòng nhập mã pin.")
+    mid.caption("Nhập mã PIN để vào trang quản trị")
     st.stop()
 
 top_l, top_r = st.columns([6, 1])
@@ -49,7 +49,7 @@ with tab_set:
         faded = st.toggle("Hiện khung bị loại (xám) trên màn hình khách", value=S["show_faded"])
         if (conf, faded) != (S["conf"], S["show_faded"]):
             save_settings(SETTINGS, {"conf": conf, "show_faded": faded})
-            st.toast(f"Đã lưu. Quầy thanh toán dùng ngưỡng {conf:.2f}.", icon="✅")
+            st.toast(f"Đã lưu. Quầy thanh toán dùng ngưỡng {conf:.2f}", icon=":material/check_circle:")
         f1 = METRICS.get("f1_best", {"conf": 0.458, "f1": 0.88})
         st.info(f"Gợi ý: F1 trên tập Test cao nhất ({f1['f1']:.2f}) tại ngưỡng {f1['conf']:.3f}, nên ngưỡng mặc định là 0,45. "
                 "Cài đặt được lưu vào tệp Logs/cai_dat.json và có hiệu lực ngay ở trang Quầy thanh toán.")
@@ -112,7 +112,7 @@ with tab_model:
     cc.dataframe(pc[["Sản phẩm", "Precision", "Recall", "mAP@0.5", "mAP@0.5:0.95"]], hide_index=True, use_container_width=True,
                  column_config=pcol, height=460)
     cd.markdown("**mAP@0.5:0.95 theo lớp** (thấp là lớp yếu)")
-    cd.bar_chart(pc.set_index("Sản phẩm")["mAP@0.5:0.95"], horizontal=True, color="#14b8a6", height=420)
+    cd.bar_chart(pc.set_index("Sản phẩm")["mAP@0.5:0.95"], horizontal=True, color="#0f766e", height=420)
     weak = pc.nsmallest(2, "mAP@0.5:0.95")["Sản phẩm"].tolist()
     st.caption(f"Hai lớp yếu nhất: {weak[0]} và {weak[1]}. Với các lớp này nên kiểm tra kỹ giỏ hàng trước khi xuất hóa đơn.")
 
@@ -174,7 +174,7 @@ with tab_stat:
         c_a.markdown("**Số lượng bán theo sản phẩm**")
         c_a.bar_chart(stats.set_index("Sản phẩm")["Số lượng bán"], horizontal=True, color="#0f766e")
         c_b.markdown("**Doanh thu theo sản phẩm (đ)**")
-        c_b.bar_chart(stats.set_index("Sản phẩm")["Doanh thu"], horizontal=True, color="#14b8a6")
+        c_b.bar_chart(stats.set_index("Sản phẩm")["Doanh thu"], horizontal=True, color="#0f766e")
 
 # ------------------------------------------------------------------ BẢNG GIÁ
 with tab_price:

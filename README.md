@@ -64,14 +64,17 @@ Kiểm thử: `python -m pytest -q`
 
 ## Huấn luyện YOLO (Colab)
 
-Mở `notebooks/colab_train_yolo.ipynb` trên Google Colab (GPU T4), hoặc chạy tay:
+Mở `notebooks/colab_finetune_yolo26n.ipynb` trên Google Colab (GPU T4), hoặc chạy tay:
 
 | Bước | Lệnh | Kết quả |
 |---|---|---|
-| Huấn luyện | `python -m src.detection.train --model yolo11n` (hoặc `yolo26n`) | `models/<tên mô hình>/weights/best.pt` |
-| Đánh giá | `python -m src.detection.evaluate --model yolo11n --split test` | `Logs/detection/<tên>_test/` (metrics.json, per_class.csv, ma trận nhầm lẫn) |
+| Huấn luyện lần đầu | `python -m src.detection.train --model yolo26n` | `models/yolo26n/weights/best.pt` |
+| Huấn luyện thêm từ best.pt | `python -m src.detection.train --finetune ft640` (hoặc `ft832`) | `models/yolo26n_ft640/weights/best.pt` |
+| Đánh giá | `python -m src.detection.evaluate --run yolo26n --split test` | `Logs/detection/<tên lượt>_test/` (metrics.json, per_class.csv, ma trận nhầm lẫn) |
+| So sánh | `python -m src.detection.compare --runs yolo26n yolo26n_ft640 yolo26n_ft832` | Bảng Val/Test và AP50-95 từng sản phẩm |
 
-Tham số (kích thước ảnh, epoch, batch...) nằm ở mục `detection` của `configs/config.yaml`.
+Tham số nằm ở mục `detection` (lần đầu) và `detection.finetune` (huấn luyện thêm) của `configs/config.yaml`.
+Chọn mô hình theo tập Validation, tập Test chỉ dùng để báo cáo.
 
 ## Chạy chương trình quầy thanh toán (Streamlit)
 

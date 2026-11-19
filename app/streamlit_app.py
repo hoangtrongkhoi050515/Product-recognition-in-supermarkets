@@ -6,7 +6,7 @@ Phần dùng chung nằm trong app/common.py.
 """
 import streamlit as st
 
-st.set_page_config(page_title="Quầy thanh toán tự động", page_icon="🛒", layout="wide")
+st.set_page_config(page_title="Quầy thanh toán tự động", page_icon=":material/shopping_cart:", layout="wide")
 
 from common import CSS  # noqa: E402  (phải gọi set_page_config trước)
 
